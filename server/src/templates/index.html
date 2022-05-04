@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Flask + Firebase</title>
+        <title>Open Reading Frames</title>
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
@@ -12,10 +12,15 @@
                 <div class="flex-child"  id="input_flex" >
                     <div class="input_div">
                         <div>
-                            <h2>Open Reading Frames (ORF)</h2>
-                            <h1>Welcome. Please try my ORF finder!</h1>
-                            <p>In molecular biology, open reading frames (ORFs) are defined as spans of DNA sequence between the start and stop codons. Usually, this is considered within a studied region of a prokaryotic DNA sequence, where only one of the six possible reading frames will be 'open' (the 'reading', however, refers to the RNA produced by transcription of the DNA and its subsequent interaction with the ribosome in translation). 
-                                Such an ORF may contain a start codon (usually ATG in terms of RNA) and by definition cannot extend beyond a stop codon (usually TGA, TAG TAA) </p>
+                            <h2>Welcome. Please try out my ORF-Finder!</h2>
+                            <h1>Open Reading Frames (ORF)</h1>
+                            <p>In molecular biology, open reading frames (ORFs) are defined as spans of DNA sequence 
+                                between the start and stop codons. <br>Usually, this is considered within a studied region
+                                 of a prokaryotic DNA sequence, where only one of the six possible reading frames will
+                                  be 'open' (the 'reading', however, refers to the RNA produced by transcription of the DNA 
+                                  and its subsequent interaction with the ribosome in translation). <br>
+                                Such an ORF may contain a <b>start codon (usually ATG in terms of RNA)</b> 
+                                and by definition cannot extend beyond a <b>stop codon (usually TGA, TAG TAA)</b> </p>
                             
                         </div>
                         <div class="fields_div">
@@ -36,38 +41,44 @@
                                 <button class="blue_button" id="btn_run" onclick="run()">Run</button> 
                             </div>
                         </div><br>
-                        <textarea id="input_genome" rows="10">Input Genome</textarea>
+                        <textarea placeholder="Input Genome" id="input_genome" rows="10"></textarea>
                     </div>
                 </div>
                 
                 <div class="flex-child" id="output_flex" style="display: none;" >
                     <div class="output_div" style="max-height: 1000px;">
-                        <div class="output_header_div">
-                            <h2>Results</h2>
-                            
-                            <div class="output_buttons_div">
-                                <a class=" export_json blue_button" id="exportJSON">Export JSON</a>
-                                <button class="blue_button close_button" onclick="close_results()">X</button>
+                                
+                        <div id="div_orfs_found">
+                            <div class="output_header_div">
+                                <h2>Results</h2>
+                                <div class="output_buttons_div">
+                                    <a class=" export_json blue_button" id="exportJSON">Export JSON</a>
+                                    <button class="blue_button close_button" onclick="close_results()">X</button>
+                                </div>
+                            </div>
+                            <p>Here are the results with: <br> 
+                                - Start and End position of ORF in input genom string <br>
+                                - ORF that was found <br>
+                                - IUPAC translation <a href="https://www.genecorner.ugent.be/iupac.html">more info</a> <br>
+                            </p>
+                            <div class="tableFixHead">
+                                <table>
+                                  <thead>
+                                    <tr><th>START</th><th>END</th><th>ORF</th><th>IUPAC</th></tr>
+                                  </thead>
+                                  <tbody id="output_orfs_div">
+    
+                                  </tbody>
+                                </table>
+                            </div>
+                            <div class="sum_div">
+                                <label>Sum: </label>
+                                <label id="sum_label"></label>
                             </div>
                         </div>
-                        <p>Here are the results with: <br> 
-                            - Start and End position of ORF in input genom string <br>
-                            - ORF that was found <br>
-                            - IUPAC translation <a href="https://www.genecorner.ugent.be/iupac.html">more info</a> <br>
-                        </p>
-                        <div class="tableFixHead">
-                            <table>
-                              <thead>
-                                <tr><th>START</th><th>END</th><th>ORF</th><th>IUPAC</th></tr>
-                              </thead>
-                              <tbody id="output_orfs_div">
-
-                              </tbody>
-                            </table>
-                        </div>
-                        <div class="sum_div">
-                            <label>Sum: </label>
-                            <label id="sum_label"></label>
+                        <div id="label_no_orfs" class="label_no_orfs">
+                            <h2>Results</h2>
+                            <label>No ORFs found!</label>
                         </div>
                     </div>
                 </div>
@@ -75,11 +86,16 @@
 
             <footer>
                 <div class="footer_div">
-                    <div>Author: Fabian Vogt</div> 
-                    <div>Server Time: {{ context.server_time }}</div>  
-                    
-                    <a href="mailto:fabianxvogt@gmail.com">Email</a>     
-                    <a href="github">Github</a>          
+                    <div>Author: <b>Fabian Vogt</b></div> 
+                    <div class="row_div">
+                        <img width="30px" height="30px" src="email_icon.png" alt="Send me an Email">
+                        <a href="mailto:fabianxvogt@gmail.com">Email</a>     
+                    </div>
+                    <div class="row_div">
+                        <img width="30px" height="30px" src="github_icon.png" alt="Show this project on GitHub">
+                        <a href="https://github.com/fabianxvogt/ORF-webapp">Github</a>    
+                    </div>  
+                        <div>Server Time: {{ context.server_time }}</div>  
                 </div>    
             </footer> 
         </div>
@@ -109,6 +125,14 @@
                         
                         var innerHTML = "<table>" //"<table><tr><th>START</th><th>END</th><th>ORF</th><th>IUPAC</th></tr>"
                         ORF_LEN = response.length
+                        if (ORF_LEN === 0) {
+                            document.getElementById("label_no_orfs").style.display = "block"
+                            document.getElementById("div_orfs_found").style.display = "none"
+                            return
+                        } else {
+                            document.getElementById("div_orfs_found").style.display = "block"
+                            document.getElementById("label_no_orfs").style.display = "none"
+                        }
                         document.getElementById("sum_label").innerHTML = ORF_LEN
                         for (var dict of response.entries()) {
                             innerHTML += "<tr>"

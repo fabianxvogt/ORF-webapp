@@ -145,8 +145,19 @@ tbody {
 .sum_div {
   font-weight: 700; margin-top: 20px;
 }
+.row_div {
+  align-items: center;
+  display:flex;  
+  flex-direction: row;
+}
 .footer_div {
-  display:flex; justify-content: space-around; height: 30px; align-items: center;
+  display:flex; 
+  justify-content: space-around; 
+  height: 50px; 
+  align-items: center; 
+  background-color: white; 
+  color: black; 
+  font-size: large;
 }
 
 .output_header_div {
@@ -162,6 +173,11 @@ tbody {
   flex-direction: row; 
   justify-content: space-between; 
   min-width: 25%;
+}
+
+.label_no_orfs {
+  color: red;
+  font-size: x-large;
 }
 
 .export_json {
