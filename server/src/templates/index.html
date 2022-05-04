@@ -47,15 +47,15 @@
                 
                 <div class="flex-child" id="output_flex" style="display: none;" >
                     <div class="output_div" style="max-height: 1000px;">
-                                
-                        <div id="div_orfs_found">
-                            <div class="output_header_div">
-                                <h2>Results</h2>
-                                <div class="output_buttons_div">
-                                    <a class=" export_json blue_button" id="exportJSON">Export JSON</a>
-                                    <button class="blue_button close_button" onclick="close_results()">X</button>
-                                </div>
+                        <div class="output_header_div">
+                            <h2>Results</h2>
+                            <div class="output_buttons_div">
+                                <a class="export_json blue_button" id="exportJSON">Export JSON</a>
+                                <button class="blue_button close_button" onclick="close_results()">X</button>
                             </div>
+                        </div>        
+                        <div id="div_orfs_found">
+                            
                             <p>Here are the results with: <br> 
                                 - Start and End position of ORF in input genom string <br>
                                 - ORF that was found <br>
@@ -77,7 +77,6 @@
                             </div>
                         </div>
                         <div id="label_no_orfs" class="label_no_orfs">
-                            <h2>Results</h2>
                             <label>No ORFs found!</label>
                         </div>
                     </div>
@@ -86,16 +85,16 @@
 
             <footer>
                 <div class="footer_div">
-                    <div>Author: <b>Fabian Vogt</b></div> 
+                    <div>Author: <br> <b>Fabian Vogt</b></div> 
                     <div class="row_div">
                         <img width="30px" height="30px" src="email_icon.png" alt="Send me an Email">
                         <a href="mailto:fabianxvogt@gmail.com">Email</a>     
                     </div>
                     <div class="row_div">
                         <img width="30px" height="30px" src="github_icon.png" alt="Show this project on GitHub">
-                        <a href="https://github.com/fabianxvogt/ORF-webapp">Github</a>    
+                        <a href="https://github.com/fabianxvogt/ORF-webapp">GitHub</a>    
                     </div>  
-                        <div>Server Time: {{ context.server_time }}</div>  
+                        <div>Server Time: <br> {{ context.server_time }}</div>  
                 </div>    
             </footer> 
         </div>
@@ -105,33 +104,30 @@
                 try {
                     fetch(url, {
                         method: 'POST',
-                        mode: 'cors',// no-cors, *cors, same-origin
+                        mode: 'cors',
                         headers: {
-                            //'Accept': '*/*',
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(data),
-                        //redirect: 'follow', // manual, *follow, error
-                        //referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                     })
                     .then((resp) => resp.json())
                     .then(function(response) {
-                        //document.getElementById("output_orfs").value = JSON.stringify(response)
-                        
                         var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(response, null, 2));
                         var dlAnchorElem = document.getElementById('exportJSON');
-                        dlAnchorElem.setAttribute("href",     dataStr     );
+                        dlAnchorElem.setAttribute("href", dataStr);
                         dlAnchorElem.setAttribute("download", "orf.json");
                         
-                        var innerHTML = "<table>" //"<table><tr><th>START</th><th>END</th><th>ORF</th><th>IUPAC</th></tr>"
+                        var innerHTML = "<table>" 
                         ORF_LEN = response.length
                         if (ORF_LEN === 0) {
                             document.getElementById("label_no_orfs").style.display = "block"
                             document.getElementById("div_orfs_found").style.display = "none"
+                            document.getElementById("exportJSON").style.visibility = "hidden"
                             return
                         } else {
                             document.getElementById("div_orfs_found").style.display = "block"
                             document.getElementById("label_no_orfs").style.display = "none"
+                            document.getElementById("exportJSON").style.visibility = "visible"
                         }
                         document.getElementById("sum_label").innerHTML = ORF_LEN
                         for (var dict of response.entries()) {
@@ -152,18 +148,10 @@
                         }
                         innerHTML += "</table>"
                         document.getElementById('output_orfs_div').innerHTML = innerHTML
-                        //console.info('fetch()', response);
-                        //return response;
                     });
                 } catch(error) {
                     console.log(error)
                 }
-            }
-            function export_json() {
-
-            }
-            function export_fasta() {
-                
             }
             async function close_results() {
                 await new Promise(resolve => {
@@ -173,11 +161,6 @@
                     }, 500);
                 })
                 document.getElementById("output_flex").style.display = "none"
-                
-
-                //document.getElementById("input_flex").scrollIntoView({ behavior: 'smooth', block: 'center' }).
-                //document.getElementById("output_flex").style.display = "none"
-                //document.getElementById("output_flex").style.display = "none";
             }
             function random_example(length) {
                 var result           = '';
@@ -202,8 +185,6 @@
                 document.getElementById("output_flex").scrollIntoView({ behavior: 'smooth', block: 'start' });
                         
                 postData(url + '/orf_api', { min: document.getElementById("length_min").value, max: document.getElementById("length_max").value, dna: document.getElementById("input_genome").value })
-                //document.getElementById("output_orfs").value = ""
-             
 
             }
         </script>
