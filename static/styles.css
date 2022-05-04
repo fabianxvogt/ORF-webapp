@@ -1,0 +1,77 @@
+body {
+  background-image: url('genom.jpg'); 
+  background-repeat: no-repeat; 
+  background-attachment: fixed;
+  background-size: cover;
+  color: rgba(0,0,0,0.87); 
+  font-family: Roboto, Helvetica, Arial, sans-serif; 
+  margin: 0; padding: 0; 
+}
+.flex-container {
+display: flex;
+flex-direction: column;
+justify-content:center;
+align-items: center;
+width: 100%;
+}
+.length_input {
+width: 50px;
+}
+
+.flex-child {
+width: 80%;
+position: relative; /* Add this one */
+flex: 1;
+margin: 50px;
+}  
+
+input .buttons, input .lengths{
+width: 100%
+}
+input button {
+  width: 120px; /* make the children equal */
+  display: inline-flex;
+  align-items: flex-end;
+  float:left;
+}
+button { 
+width: 100%;
+display: block; 
+text-align: center; 
+background: #039be5; 
+text-transform: uppercase; 
+text-decoration: none; 
+color: white; 
+padding: 16px; 
+border-radius: 4px; 
+}
+footer {
+text-align: center;
+padding: 0px;
+background-color: black;
+color: white;
+}
+th {
+  text-align:left;
+  background-color: #039be5;
+  color: white;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+table {
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 3px;
+}
+
+.input_div, .output_div { transition: visibility 0s linear 0.33s, opacity 0.33s linear; background: white; opacity: 90%; max-width: 100%; margin-top: 100px auto 16px;padding: 32px 24px; border-radius: 3px; }
+h2, input { color: #ffa100; font-weight: bold; font-size: 16px; }
+h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
+p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
+a, button { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
+a, button { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
