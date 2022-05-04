@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Open Reading Frames</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="body_div" >
+            <div class="flex-container">
+                <div class="flex-child"  id="input_flex" >
+                    <div class="input_div">
+                        <div>
+                            <h2>Welcome. Please try out my ORF-Finder!</h2>
+                            <h1>Open Reading Frames (ORF)</h1>
+                            <p>In molecular biology, open reading frames (ORFs) are defined as spans of DNA sequence 
+                                between the start and stop codons. <br>Usually, this is considered within a studied region
+                                 of a prokaryotic DNA sequence, where only one of the six possible reading frames will
+                                  be 'open' (the 'reading', however, refers to the RNA produced by transcription of the DNA 
+                                  and its subsequent interaction with the ribosome in translation). <br>
+                                Such an ORF may contain a <b>start codon (usually ATG in terms of RNA)</b> 
+                                and by definition cannot extend beyond a <b>stop codon (usually TGA, TAG TAA)</b> </p>
+                            
+                        </div>
+                        <div class="fields_div">
+                            <div class="label_input_div">
+                                <div class="length_labels_div">
+                                    <label for="min">Minimum ORF length:</label>
+                                    <label for="max">Maximum ORF length:</label>
+                                    <label for="max">Example genome length:</label>
+                                </div>
+                                <div class="length_inputs_div">
+                                    <input class="length_input" name="min" id="length_min" value="1"/>
+                                    <input class="length_input" name="max" id="length_max" value="10"/>
+                                    <input class="length_input" name="example" id="length_example" value="5000"/>
+                                </div>
+                            </div>
+                            <div class="buttons_div">
+                                <button class="blue_button" id="btn_example" onclick="example()">Paste Example</button>
+                                <button class="blue_button" id="btn_run" onclick="run()">Run</button> 
+                            </div>
+                        </div><br>
+                        <textarea placeholder="Input Genome" id="input_genome" rows="10"></textarea>
+                    </div>
+                </div>
+                
+                <div class="flex-child" id="output_flex" style="display: none;" >
+                    <div class="output_div" style="max-height: 1000px;">
+                                
+                        <div id="div_orfs_found">
+                            <div class="output_header_div">
+                                <h2>Results</h2>
+                                <div class="output_buttons_div">
+                                    <a class=" export_json blue_button" id="exportJSON">Export JSON</a>
+                                    <button class="blue_button close_button" onclick="close_results()">X</button>
+                                </div>
+                            </div>
+                            <p>Here are the results with: <br> 
+                                - Start and End position of ORF in input genom string <br>
+                                - ORF that was found <br>
+                                - IUPAC translation <a href="https://www.genecorner.ugent.be/iupac.html">more info</a> <br>
+                            </p>
+                            <div class="tableFixHead">
+                                <table>
+                                  <thead>
+                                    <tr><th>START</th><th>END</th><th>ORF</th><th>IUPAC</th></tr>
+                                  </thead>
+                                  <tbody id="output_orfs_div">
+    
+                                  </tbody>
+                                </table>
+                            </div>
+                            <div class="sum_div">
+                                <label>Sum: </label>
+                                <label id="sum_label"></label>
+                            </div>
+                        </div>
+                        <div id="label_no_orfs" class="label_no_orfs">
+                            <h2>Results</h2>
+                            <label>No ORFs found!</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                <div class="footer_div">
+                    <div>Author: <b>Fabian Vogt</b></div> 
+                    <div class="row_div">
+                        <img width="30px" height="30px" src="email_icon.png" alt="Send me an Email">
+                        <a href="mailto:fabianxvogt@gmail.com">Email</a>     
+                    </div>
+                    <div class="row_div">
+                        <img width="30px" height="30px" src="github_icon.png" alt="Show this project on GitHub">
+                        <a href="https://github.com/fabianxvogt/ORF-webapp">Github</a>    
+                    </div>  
+                        <div>Server Time: {{ context.server_time }}</div>  
+                </div>    
+            </footer> 
+        </div>
+          <script>
+            var ORF_LEN = 0
+            function postData(url = '', data = {}) {
+                try {
+                    fetch(url, {
+                        method: 'POST',
+                        mode: 'cors',// no-cors, *cors, same-origin
+                        headers: {
+                            //'Accept': '*/*',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data),
+                        //redirect: 'follow', // manual, *follow, error
+                        //referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    })
+                    .then((resp) => resp.json())
+                    .then(function(response) {
+                        //document.getElementById("output_orfs").value = JSON.stringify(response)
+                        
+                        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(response, null, 2));
+                        var dlAnchorElem = document.getElementById('exportJSON');
+                        dlAnchorElem.setAttribute("href",     dataStr     );
+                        dlAnchorElem.setAttribute("download", "orf.json");
+                        
+                        var innerHTML = "<table>" //"<table><tr><th>START</th><th>END</th><th>ORF</th><th>IUPAC</th></tr>"
+                        ORF_LEN = response.length
+                        if (ORF_LEN === 0) {
+                            document.getElementById("label_no_orfs").style.display = "block"
+                            document.getElementById("div_orfs_found").style.display = "none"
+                            return
+                        } else {
+                            document.getElementById("div_orfs_found").style.display = "block"
+                            document.getElementById("label_no_orfs").style.display = "none"
+                        }
+                        document.getElementById("sum_label").innerHTML = ORF_LEN
+                        for (var dict of response.entries()) {
+                            innerHTML += "<tr>"
+                            orf = dict[1]['ORF']
+                            iupac = dict[1]['IUPAC']
+                            if (orf.length > 120) {
+                                orf = orf.slice(0,120) + "..."
+                            }
+                            if (iupac.length > 40) {
+                                iupac = iupac.slice(0,40) + "..."
+                            }
+                            innerHTML += "<td>" + dict[1]['START'] + "</td>";
+                            innerHTML += "<td>" + dict[1]['END'] + "</td>";
+                            innerHTML += "<td>" + orf + "</td>";
+                            innerHTML += "<td>" + iupac + "</td>";
+                            innerHTML += "</tr>"
+                        }
+                        innerHTML += "</table>"
+                        document.getElementById('output_orfs_div').innerHTML = innerHTML
+                        //console.info('fetch()', response);
+                        //return response;
+                    });
+                } catch(error) {
+                    console.log(error)
+                }
+            }
+            function export_json() {
+
+            }
+            function export_fasta() {
+                
+            }
+            async function close_results() {
+                await new Promise(resolve => {
+                    document.getElementById("input_flex").scrollIntoView({ behavior: 'smooth', block: 'center' })
+                    setTimeout(() => {
+                        resolve("");
+                    }, 500);
+                })
+                document.getElementById("output_flex").style.display = "none"
+                
+
+                //document.getElementById("input_flex").scrollIntoView({ behavior: 'smooth', block: 'center' }).
+                //document.getElementById("output_flex").style.display = "none"
+                //document.getElementById("output_flex").style.display = "none";
+            }
+            function random_example(length) {
+                var result           = '';
+                var characters       = 'TAGC';
+                var charactersLength = characters.length;
+                for ( var i = 0; i < length; i++ ) {
+                    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                }
+                return result;
+            }
+            function example() {
+                document.getElementById("input_genome").value = random_example(document.getElementById("length_example").value)
+            }
+      
+            function run() {
+                var url = 'https://orf-container1-2nap6n3mua-uc.a.run.app'
+                var local_url = 'http://127.0.0.1:5000'
+                var x = document.getElementById("output_flex");  
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } 
+                document.getElementById("output_flex").scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        
+                postData(url + '/orf_api', { min: document.getElementById("length_min").value, max: document.getElementById("length_max").value, dna: document.getElementById("input_genome").value })
+                //document.getElementById("output_orfs").value = ""
+             
+
+            }
+        </script>
+    </body>
+</html>

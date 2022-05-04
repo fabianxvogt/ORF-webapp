@@ -1,0 +1,222 @@
+body {
+  background-image: url('genom.jpg'); 
+  background-repeat: no-repeat; 
+  background-attachment: fixed;
+  background-size: cover;
+  color: rgba(0,0,0,0.87); 
+  font-family: Roboto, Helvetica, Arial, sans-serif; 
+  margin: 0; padding: 0; 
+}
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+  width: 100%;
+}
+.length_input {
+  width: 50px;
+}
+
+.input_div, .output_div {
+  background: white;
+  opacity: 95%;
+  max-width: 100%; 
+  padding: 20px 20px; 
+  border-radius: 10px;
+}
+
+.flex-child {
+  min-width: 90%;
+  max-width: 90%;
+  position: relative; /* Add this one */
+  flex: 1;
+  margin: 50px;
+}  
+
+input .buttons, input .lengths{
+width: 100%
+}
+/*
+input button {
+  width: 120px; /* make the children equal 
+  display: inline-flex;
+  align-items: flex-end;
+  float:left;
+}
+*/
+textarea {
+  width: 100%;
+}
+/*
+button { 
+width: 100%;
+display: block; 
+text-align: center; 
+background: #039be5; 
+text-transform: uppercase; 
+text-decoration: none; 
+color: white; 
+padding: 16px; 
+margin: 10px;
+border-radius: 4px; 
+}
+*/
+footer {
+text-align: center;
+padding: 0px;
+background-color: black;
+color: white;
+}
+/*
+th {
+  text-align:left;
+  background-color: #039be5;
+  color: white;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  font-size: x-small;
+}
+table {
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 3px;
+}
+*/
+
+.body_div {
+  min-height:100vh; 
+  display:flex; 
+  flex-direction:column; 
+  justify-content:space-between;
+}
+
+.label_input_div {
+  display: flex; 
+  flex-direction: row; 
+  justify-content: space-between; 
+  min-width: 30%;
+}
+
+.length_labels_div {
+  display:flex; 
+  flex-direction: column; 
+  justify-content: space-evenly; 
+  margin-right: 20px;
+}
+
+.length_inputs_div {
+  display:flex; 
+  flex-direction: column;  
+  justify-content: space-evenly;
+}
+
+.buttons_div {
+  margin-right: 20px; 
+  display:flex; 
+  flex-direction: column; 
+  justify-content: space-between;
+}
+
+
+.tableFixHead          { overflow: auto; max-height: 700px; }
+.tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
+
+/* Just common table stuff. Really. */
+table  { width: 100%; }
+th     { color: white; background-color: #039be5; }
+th, td { 
+  padding: 8px 16px; 
+  text-align: left;
+  padding: 3px;  }
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  font-size: x-small;
+}
+tbody {
+  max-height: 500px; overflow: auto;
+}
+.sum_div {
+  font-weight: 700; margin-top: 20px;
+}
+.row_div {
+  align-items: center;
+  display:flex;  
+  flex-direction: row;
+}
+.footer_div {
+  display:flex; 
+  justify-content: space-around; 
+  height: 50px; 
+  align-items: center; 
+  background-color: white; 
+  color: black; 
+  font-size: large;
+}
+
+.output_header_div {
+  height: fit-content;
+  display: flex; 
+  flex-direction: row; 
+  justify-content: space-between; 
+  max-width: 100%;
+}
+.output_buttons_div {
+  height: fit-content;
+  display: flex; 
+  flex-direction: row; 
+  justify-content: space-between; 
+  min-width: 25%;
+}
+
+.label_no_orfs {
+  color: red;
+  font-size: x-large;
+}
+
+.export_json {
+  max-height: 30px;
+  margin: 0px;
+}
+
+.close_button {
+  min-height: 30px;
+  width: 60px;
+  margin-left: 10px; 
+  font-weight: 500; 
+  font-size: xx-large;
+}
+
+.blue_button {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  
+  height: 50px;
+  text-align: center; 
+  background: #039be5; 
+  text-transform: uppercase; 
+  text-decoration: none; 
+  color: white; 
+  padding: 10px; 
+  margin: 10px;
+  border-radius: 4px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+}
+
+
+.fields_div {
+  display:flex; flex-direction: row; justify-content: space-between; max-width: 100%; 
+}
+/*.input_div, .output_div { transition: visibility 0s linear 0.33s, opacity 0.33s linear; background: white; opacity: 90%; max-width: 100%; margin-top: 100px auto 16px;padding: 32px 24px; border-radius: 3px; }*/
+h2, input { color: #ffa100; font-weight: bold; font-size: 16px; }
+h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
+p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
+/*a, button { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
+a, button { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); } */
