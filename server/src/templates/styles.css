@@ -71,7 +71,7 @@ footer {
   display:flex; 
   flex-direction: column; 
   justify-content: space-between;
-  margin: 18px 20px 18px 0px; 
+  margin: 18px 10px 18px 0px; 
 }
 
 .length_inputs_div {
@@ -81,9 +81,10 @@ footer {
 }
 
 .buttons_div {
+  margin-left: 10px;
   display:flex; 
   flex-direction: column; 
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 
@@ -176,7 +177,8 @@ tbody {
   text-decoration: none; 
   color: white; 
   padding: 10px; 
-  margin: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   border-radius: 4px; 
   display: flex; 
   align-items: center; 
@@ -185,7 +187,7 @@ tbody {
 }
 
 .fields_div {
-  display:flex; margin:0px 0px 0px 10px; flex-direction: row; justify-content: space-between; max-width: 100%; 
+  display:flex; margin:0px 0px 0px 0px; flex-direction: row; justify-content: space-between; max-width: 100%; 
 }
 h2, input { color: #ffa100; font-weight: bold; font-size: 16px; }
 h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px 10px;}
