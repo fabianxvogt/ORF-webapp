@@ -15,7 +15,8 @@ body {
   width: 100%;
 }
 .length_input {
-  width: 50px;
+  padding: 5%;
+ max-width: 100px;
 }
 
 .input_div, .output_div {
@@ -74,7 +75,6 @@ color: white;
 }
 
 .buttons_div {
-  margin-right: 20px; 
   display:flex; 
   flex-direction: column; 
   justify-content: space-between;
@@ -129,12 +129,12 @@ tbody {
   display: flex; 
   flex-direction: row; 
   justify-content: space-between; 
-  min-width: 25%;
 }
 
 .label_no_orfs {
   color: red;
   font-size: x-large;
+  display: none;
 }
 
 .export_json {
@@ -165,6 +165,7 @@ tbody {
   display: flex; 
   align-items: center; 
   justify-content: center; 
+  cursor:pointer;
 }
 
 .fields_div {
@@ -173,3 +174,32 @@ tbody {
 h2, input { color: #ffa100; font-weight: bold; font-size: 16px; }
 h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
 p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
+
+
+/* loading animation */
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #039be5; 
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: fixed;
+  margin: auto; 
+  inset: 0; 
+  box-shadow: 0px 0px 100px 30px grey; 
+  background-color: rgba(128, 128, 128, .5); 
+  visibility: hidden;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

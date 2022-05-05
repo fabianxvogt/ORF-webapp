@@ -8,38 +8,43 @@
     </head>
     <body>
         <div class="body_div" >
+            
             <div class="flex-container">
                 <div class="flex-child"  id="input_flex" >
                     <div class="input_div">
                         <div>
                             <h2>Welcome. Please try out my ORF-Finder!</h2>
                             <h1>Open Reading Frames (ORF)</h1>
-                            <p>In molecular biology, open reading frames (ORFs) are defined as spans of DNA sequence 
-                                between the start and stop codons. <br>Usually, this is considered within a studied region
+                            <p>In <b>molecular biology</b>, open reading frames (ORFs) are defined as <b>spans of DNA sequence 
+                                between the start and stop codons.</b> <br>Usually, this is considered within a studied region
                                  of a prokaryotic DNA sequence, where only one of the six possible reading frames will
                                   be 'open' (the 'reading', however, refers to the RNA produced by transcription of the DNA 
                                   and its subsequent interaction with the ribosome in translation). <br>
                                 Such an ORF may contain a <b>start codon (usually ATG in terms of RNA)</b> 
-                                and by definition cannot extend beyond a <b>stop codon (usually TGA, TAG TAA)</b> </p>
-                            
+                                and by definition cannot extend beyond a <b>stop codon (usually TGA, TAG TAA)</b> <br><a href="https://en.wikipedia.org/wiki/Open_reading_frame">more info on ORFs</a>
+                            </p><br>
                         </div>
                         <div class="fields_div">
-                            <div class="label_input_div">
-                                <div class="length_labels_div">
-                                    <label for="min">Minimum ORF length:</label>
-                                    <label for="max">Maximum ORF length:</label>
-                                    <label for="max">Example genome length:</label>
+                                <div class="label_input_div">
+                                    <div class="length_labels_div">
+                                        <label for="dna">Example genome length:</label>
+                                        <label for="min">Minimum ORF length:</label>
+                                        <label for="max">Maximum ORF length:</label>
+                                    </div>
+                                    <div class="length_inputs_div">
+                                            <input class="length_input" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                            type = "number" maxlength = "7" type="number" name="example" id="length_example" value="5000"/>
+                                            <input class="length_input" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                            type = "number" maxlength = "2" name="min" id="length_min" value="4"/>
+                                            <input class="length_input" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                            type = "number" maxlength = "3" type="number" name="max" id="length_max" value="20"/>
+                                        
+                                    </div>
                                 </div>
-                                <div class="length_inputs_div">
-                                    <input class="length_input" name="min" id="length_min" value="1"/>
-                                    <input class="length_input" name="max" id="length_max" value="10"/>
-                                    <input class="length_input" name="example" id="length_example" value="5000"/>
+                                <div class="buttons_div">
+                                    <button class="blue_button" id="btn_example" onclick="example()">Paste Example</button>
+                                    <button class="blue_button" id="btn_run" onclick="run()">Run</button> 
                                 </div>
-                            </div>
-                            <div class="buttons_div">
-                                <button class="blue_button" id="btn_example" onclick="example()">Paste Example</button>
-                                <button class="blue_button" id="btn_run" onclick="run()">Run</button> 
-                            </div>
                         </div><br>
                         <textarea placeholder="Input Genome" id="input_genome" rows="10"></textarea>
                     </div>
@@ -55,12 +60,12 @@
                             </div>
                         </div>        
                         <div id="div_orfs_found">
-                            
-                            <p>Here are the results with: <br> 
-                                - Start and End position of ORF in input genom string <br>
+                            <h1 id="output_title_sum">ORFs were found!</h1>
+                            <p>The data is presented in the following structure:<br> 
+                                - start and end position in input genom string <br>
                                 - ORF that was found <br>
                                 - IUPAC translation <a href="https://www.genecorner.ugent.be/iupac.html">more info</a> <br>
-                            </p>
+                            </p><br><br>
                             <div class="tableFixHead">
                                 <table>
                                   <thead>
@@ -81,7 +86,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div><br><br><br><br>
 
             <footer>
                 <div class="footer_div">
@@ -96,10 +101,26 @@
                     </div>  
                         <div>Server Time: <br> {{ context.server_time }}</div>  
                 </div>    
-            </footer> 
+            </footer>
+            <div id="loader" class="loader"></div>
         </div>
+        
           <script>
             var ORF_LEN = 0
+            function end_loading() {
+                document.getElementById("loader").style.visibility = "hidden"
+            }
+            function start_loading() {
+                document.getElementById("loader").style.visibility = "visible"
+            }
+            function after_orf_search() {
+                end_loading()
+                var x = document.getElementById("output_flex");  
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } 
+                document.getElementById("output_flex").scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
             function postData(url = '', data = {}) {
                 try {
                     fetch(url, {
@@ -117,12 +138,15 @@
                         dlAnchorElem.setAttribute("href", dataStr);
                         dlAnchorElem.setAttribute("download", "orf.json");
                         
-                        var innerHTML = "<table>" 
                         ORF_LEN = response.length
+                        document.getElementById("output_title_sum").innerHTML = "Found " + ORF_LEN + " ORFs!"
+
+                        var innerHTML = "<table>" 
                         if (ORF_LEN === 0) {
                             document.getElementById("label_no_orfs").style.display = "block"
                             document.getElementById("div_orfs_found").style.display = "none"
                             document.getElementById("exportJSON").style.visibility = "hidden"
+                            after_orf_search()
                             return
                         } else {
                             document.getElementById("div_orfs_found").style.display = "block"
@@ -148,6 +172,8 @@
                         }
                         innerHTML += "</table>"
                         document.getElementById('output_orfs_div').innerHTML = innerHTML
+
+                        after_orf_search()
                     });
                 } catch(error) {
                     console.log(error)
@@ -163,30 +189,30 @@
                 document.getElementById("output_flex").style.display = "none"
             }
             function random_example(length) {
-                var result           = '';
-                var characters       = 'TAGC';
-                var charactersLength = characters.length;
-                for ( var i = 0; i < length; i++ ) {
-                    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-                }
-                return result;
+                return new Promise(resolve => {
+                    var result           = '';
+                    var characters       = 'TAGC';
+                    var charactersLength = characters.length;
+                    for ( var i = 0; i < length; i++ ) {
+                        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                    }
+                    end_loading()
+                    resolve("");
+                    document.getElementById("input_genome").value = result
+                })                
             }
             function example() {
-                document.getElementById("input_genome").value = random_example(document.getElementById("length_example").value)
+                random_example(document.getElementById("length_example").value)
             }
       
             function run() {
                 var url = 'https://orf-container1-2nap6n3mua-uc.a.run.app'
                 var local_url = 'http://127.0.0.1:5000'
-                var x = document.getElementById("output_flex");  
-                if (x.style.display === "none") {
-                    x.style.display = "block";
-                } 
-                document.getElementById("output_flex").scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        
+                start_loading()
                 postData(url + '/orf_api', { min: document.getElementById("length_min").value, max: document.getElementById("length_max").value, dna: document.getElementById("input_genome").value })
-
             }
+
+            
         </script>
     </body>
 </html>
