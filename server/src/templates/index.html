@@ -13,22 +13,20 @@
                 <div class="flex-child"  id="input_flex" >
                     <div class="input_div">
                         <div>
-                            <h2>Welcome. Please try out my ORF-Finder!</h2>
+                            <h2>Search for ORFs</h2>       
+                            <br>
                             <h1>Open Reading Frames (ORF)</h1>
                             <p>In <b>molecular biology</b>, open reading frames (ORFs) are defined as <b>spans of DNA sequence 
-                                between the start and stop codons.</b> <br>Usually, this is considered within a studied region
-                                 of a prokaryotic DNA sequence, where only one of the six possible reading frames will
-                                  be 'open' (the 'reading', however, refers to the RNA produced by transcription of the DNA 
-                                  and its subsequent interaction with the ribosome in translation). <br>
-                                Such an ORF may contain a <b>start codon (usually ATG in terms of RNA)</b> 
-                                and by definition cannot extend beyond a <b>stop codon (usually TGA, TAG TAA)</b> <br><a href="https://en.wikipedia.org/wiki/Open_reading_frame">more info on ORFs</a>
+                                between the start and stop codons.</b> <br>Such an ORF may contain a <b>start codon (ATG)</b> 
+                                and by definition cannot extend beyond a <b>stop codon (TGA, TAG TAA)</b> <br><a href="https://en.wikipedia.org/wiki/Open_reading_frame">more info on ORFs</a>
                             </p><br>
+                            <p>1. Insert a genome string (characters 'ATGC')<br> (or press the example button)<br>2. Define minimal and maximal length of ORFs<br>3. Hit RUN!</p><br>
                         </div>
                         <div class="fields_div">
                                 <div class="label_input_div">
                                     <div class="length_labels_div">
-                                        <label for="dna">Example genome length:</label>
-                                        <label for="min">Minimum ORF length:</label>
+                                        <label for="dna">Example genome length:</label><br>
+                                        <label for="min">Minimum ORF length:</label><br>
                                         <label for="max">Maximum ORF length:</label>
                                     </div>
                                     <div class="length_inputs_div">
@@ -51,7 +49,7 @@
                 </div>
                 
                 <div class="flex-child" id="output_flex" style="display: none;" >
-                    <div class="output_div" style="max-height: 1000px;">
+                    <div class="output_div">
                         <div class="output_header_div">
                             <h2>Results</h2>
                             <div class="output_buttons_div">
@@ -59,12 +57,13 @@
                                 <button class="blue_button close_button" onclick="close_results()">X</button>
                             </div>
                         </div>        
+                        <br>
                         <div id="div_orfs_found">
                             <h1 id="output_title_sum">ORFs were found!</h1>
                             <p>The data is presented in the following structure:<br> 
                                 - start and end position in input genom string <br>
-                                - ORF that was found <br>
-                                - IUPAC translation <a href="https://www.genecorner.ugent.be/iupac.html">more info</a> <br>
+                                - ORF that was found (normal or reverse complement) <br>
+                                - IUPAC translation <a href="https://www.genecorner.ugent.be/iupac.html">more info</a> <br><br>If an ORF was found in the reverse complement, the start position will be greater than the end position<br>
                             </p><br><br>
                             <div class="tableFixHead">
                                 <table>

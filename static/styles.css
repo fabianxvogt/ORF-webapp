@@ -22,8 +22,10 @@ body {
 .input_div, .output_div {
   background: white;
   opacity: 95%;
+  height: 100%;
+  height: fit-content;
   /*max-width: 100%; */
-  padding: 20px 20px; 
+  padding: 10px 10px; 
   border-radius: 10px;
 }
 .input_div {
@@ -35,7 +37,7 @@ body {
   display: flex;
   justify-content: center;
   min-width: 50%;
-  max-width: 100%;
+  max-width: 92%;
   position: relative;
   flex: 1;
   margin: 50px;
@@ -64,14 +66,15 @@ footer {
   display: flex; 
   flex-direction: row; 
   justify-content: space-between; 
-  min-width: 30%;
+  min-width: 40%;
+  margin-left: 10px;
 }
 
 .length_labels_div {
   display:flex; 
   flex-direction: column; 
   justify-content: space-between;
-  margin: 18px 20px 18px 0px; 
+  margin: 20px auto 20px 0px; 
 }
 
 .length_inputs_div {
@@ -81,17 +84,19 @@ footer {
 }
 
 .buttons_div {
+  margin-left: 10px;
   display:flex; 
   flex-direction: column; 
-  justify-content: space-between;
+  justify-content: space-evenly;
+  margin-right: 10px;
 }
 
 
-.tableFixHead          { overflow: auto; max-height: 700px; }
+.tableFixHead          { overflow: auto; height: 800px; }
 .tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
 
 /* Just common table stuff. Really. */
-table  { width: 100%; }
+table  { width: 100%; max-height: 800px;}
 th     { color: white; background-color: #039be5; }
 th, td { 
   padding: 8px 16px; 
@@ -103,7 +108,7 @@ table, th, td {
   font-size: x-small;
 }
 tbody {
-  max-height: 500px; overflow: auto;
+   overflow: auto;
 }
 .sum_div {
   font-weight: 700; margin-top: 20px;
@@ -118,11 +123,10 @@ tbody {
   justify-content: space-around; 
   height: 60px; 
   align-items: center; 
-  border-top: 10px solid #ffa100;
-  border-left: 10px solid #ffa100;
+  border-top: 3px solid #ffa100;
+  border-left: 3px solid #ffa100;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  border-style: double;
   background-color: white;
   color: black; 
   font-size: medium;
@@ -145,6 +149,7 @@ tbody {
   display: flex; 
   flex-direction: row; 
   justify-content: space-between; 
+  margin-right: 10px;
 }
 
 .label_no_orfs {
@@ -156,6 +161,7 @@ tbody {
 .export_json {
   max-height: 30px;
   margin: 0px;
+  font-size: small;
 }
 
 .close_button {
@@ -176,8 +182,9 @@ tbody {
   text-decoration: none; 
   color: white; 
   padding: 10px; 
-  margin: 10px;
-  border-radius: 4px; 
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px; 
   display: flex; 
   align-items: center; 
   justify-content: center; 
@@ -185,9 +192,10 @@ tbody {
 }
 
 .fields_div {
-  display:flex; margin:0px 0px 0px 10px; flex-direction: row; justify-content: space-between; max-width: 100%; 
+  display:flex; margin:0px 0px 0px 0px; flex-direction: row; justify-content: space-between; max-width: 100%; 
 }
-h2, input { color: #ffa100; font-weight: bold; font-size: 16px; }
+h2, input { 
+  margin-left: 10px; color: #ffa100; font-weight: bold; font-size: 16px; }
 h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px 10px;}
 p { line-height: 140%; margin: 0px 20px 0px 20px; max-width: 1000px; font-size: 14px; }
 
