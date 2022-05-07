@@ -16,7 +16,7 @@ body {
 }
 .length_input {
   padding: 5%;
-  max-width: 80px;
+  max-width: 60px;
 }
 
 .input_div, .output_div {
@@ -40,7 +40,9 @@ body {
   max-width: 92%;
   position: relative;
   flex: 1;
-  margin: 50px;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 40px;
 }  
 
 input .buttons, input .lengths{
@@ -137,16 +139,22 @@ tbody {
 .output_header_div {
   height: fit-content;
   display: flex; 
-  flex-direction: row; 
+  flex-direction: column; 
   justify-content: space-between; 
   max-width: 100%;
 }
 .output_buttons_div {
+  width: 100%;
+  margin-top: 0px;
   height: fit-content;
   display: flex; 
   flex-direction: row; 
-  justify-content: space-between; 
-  margin-right: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title_sum {
+  align-items: center;
 }
 
 .label_no_orfs {
@@ -155,9 +163,10 @@ tbody {
 }
 
 .export_json {
-  max-height: 30px;
-  margin: 0px;
   font-size: small;
+  max-width: 30%;
+  min-height: 20px;
+  
 }
 
 .close_button {
@@ -195,9 +204,9 @@ tbody {
   display: flex; flex-direction: row; width: 100%; justify-content: space-between;  align-items: center;
 }
 .input_button {
-  margin-top: 10px;
+  margin-top: 5px;
   margin-bottom: 5px;
-  margin-left: 5px;
+  margin-left: 10px;
   width: 30%;
   max-width: 150px;
 }
@@ -211,7 +220,7 @@ tbody {
 
 h2, input { 
   margin-left: 10px; color: #ffa100; font-weight: bold; font-size: 16px; }
-h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px 10px;}
+h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 10px;}
 p { line-height: 140%; margin: 0px 20px 0px 20px; max-width: 1000px; font-size: 14px; }
 
 
@@ -287,8 +296,8 @@ p { line-height: 140%; margin: 0px 20px 0px 20px; max-width: 1000px; font-size: 
   font-family: arial;
   font-weight: bold;
   position: absolute;
-  top: -20px;
-  right: -20px;
+  top: -15px;
+  right: -15px;
   font-size: 25px;
   line-height: 30px;
   width: 30px;
