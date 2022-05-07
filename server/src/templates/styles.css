@@ -16,7 +16,7 @@ body {
 }
 .length_input {
   padding: 5%;
-  max-width: 100px;
+  max-width: 80px;
 }
 
 .input_div, .output_div {
@@ -73,8 +73,8 @@ footer {
 .length_labels_div {
   display:flex; 
   flex-direction: column; 
-  justify-content: space-between;
-  margin: 20px auto 20px 0px; 
+  justify-content: space-evenly;
+  margin: 00px auto 0px 0px; 
 }
 
 .length_inputs_div {
@@ -123,10 +123,7 @@ tbody {
   justify-content: space-around; 
   height: 60px; 
   align-items: center; 
-  border-top: 3px solid #ffa100;
-  border-left: 3px solid #ffa100;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  border-top: 5px solid #ffa100;
   background-color: white;
   color: black; 
   font-size: medium;
@@ -153,7 +150,6 @@ tbody {
 }
 
 .label_no_orfs {
-  color: red;
   font-size: x-large;
   display: none;
 }
@@ -175,25 +171,44 @@ tbody {
 .blue_button {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   
-  height: 50px;
+  height: fit-content;
   text-align: center; 
   background: #039be5; 
   text-transform: uppercase; 
   text-decoration: none; 
   color: white; 
   padding: 10px; 
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 0px;
+  margin-bottom: 0px;
   border-radius: 5px; 
   display: flex; 
   align-items: center; 
   justify-content: center; 
   cursor:pointer;
+  width: 100%;
 }
 
 .fields_div {
-  display:flex; margin:0px 0px 0px 0px; flex-direction: row; justify-content: space-between; max-width: 100%; 
+  display:flex; margin:0px 0px 0px 0px; flex-direction: column; justify-content: space-between; max-width: 100%;
 }
+.input_row {
+  display: flex; flex-direction: row; width: 100%; justify-content: space-between;  align-items: center;
+}
+.input_button {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  width: 30%;
+  max-width: 150px;
+}
+.input_length {
+  margin-right: auto;
+}
+
+.input_label {
+  width: 30%;
+}
+
 h2, input { 
   margin-left: 10px; color: #ffa100; font-weight: bold; font-size: 16px; }
 h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px 10px;}
@@ -226,4 +241,68 @@ p { line-height: 140%; margin: 0px 20px 0px 20px; max-width: 1000px; font-size: 
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* Popup box BEGIN */
+.hover_bkgr_fricc{
+  background:rgba(0,0,0,.4);
+  cursor:pointer;
+  display:none;
+  height:100%;
+  position:fixed;
+  text-align:center;
+  font-size: large;
+  
+  color: #ffa100;
+  font-weight: bold;
+  top:0;
+  width:100%;
+  z-index:10000;
+}
+.hover_bkgr_fricc .helper{
+  display:inline-block;
+  height:100%;
+  vertical-align:middle;
+}
+.hover_bkgr_fricc > div {
+  background-color: #fff;
+  box-shadow: 10px 10px 60px #555;
+  display: inline-block;
+  height: auto;
+  max-width: 400px;
+  max-height: 100px;
+  vertical-align: middle;
+  width: 60%;
+  position: relative;
+  border-radius: 8px;
+  padding: 15px 5%;
+}
+.popupCloseButton {
+  background-color: #fff;
+  color: black;
+  border: 3px solid #999;
+  border-radius: 50px;
+  cursor: pointer;
+  display: inline-block;
+  font-family: arial;
+  font-weight: bold;
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  font-size: 25px;
+  line-height: 30px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  margin: 0px;
+}
+.popupCloseButton:hover {
+  background-color: #ccc;
+}
+.trigger_popup_fricc {
+  cursor: pointer;
+  font-size: 20px;
+  margin: 20px;
+  display: inline-block;
+  font-weight: bold;
 }

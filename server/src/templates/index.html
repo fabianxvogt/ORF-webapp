@@ -7,6 +7,13 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
+        <div class="hover_bkgr_fricc" id="no_genome_label">
+            <span class="helper"></span>
+            <div>
+                <div onclick="exit_popup()" class="popupCloseButton">&times;</div>
+                Insert a genome! <br> (Or press the 'PASTE EXAMPLE' button)
+            </div>
+        </div>
         <div class="body_div" >
             
             <div class="flex-container">
@@ -23,26 +30,42 @@
                             <p>1. Insert a genome string (characters 'ATGC')<br> (or press the example button)<br>2. Define minimal and maximal length of ORFs<br>3. Hit RUN!</p><br>
                         </div>
                         <div class="fields_div">
-                                <div class="label_input_div">
-                                    <div class="length_labels_div">
-                                        <label for="dna">Example genome length:</label><br>
-                                        <label for="min">Minimum ORF length:</label><br>
-                                        <label for="max">Maximum ORF length:</label>
-                                    </div>
-                                    <div class="length_inputs_div">
+                                    <div class="input_row">
+                                        <div class="input_label">
+                                            <label for="dna">Example genome length:</label>
+                                        </div>
+                                        <div class="input_length">
                                             <input class="length_input" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                            type = "number" maxlength = "7" type="number" name="example" id="length_example" value="5000"/>
+                                            type = "number" maxlength = "6" type="number" name="example" id="length_example" value="5000"/>
+                                        </div>
+                                        <div class="input_button">
+                                            <button class="blue_button" id="btn_example" onclick="example()">Paste Example</button>
+                                        </div>
+                                    </div>
+                                    <div class="input_row">
+                                        <div class="input_label">
+                                            <label for="min">Minimum ORF length:</label>
+                                        </div>
+                                        <div class="input_length">
                                             <input class="length_input" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                             type = "number" maxlength = "2" name="min" id="length_min" value="4"/>
+                                        </div>
+                                        <div class="input_button">
+                                            <button class="blue_button" id="btn_clear" onclick="clear_input()">Clear</button>
+                                        </div>
+                                    </div>
+                                    <div class="input_row">
+                                        <div class="input_label">
+                                            <label for="max">Maximum ORF length:</label>
+                                        </div>
+                                        <div class="input_length">
                                             <input class="length_input" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                             type = "number" maxlength = "3" type="number" name="max" id="length_max" value="20"/>
-                                        
+                                        </div>
+                                        <div class="input_button">
+                                            <button class="blue_button" id="btn_run" onclick="run()">Run</button> 
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="buttons_div">
-                                    <button class="blue_button" id="btn_example" onclick="example()">Paste Example</button>
-                                    <button class="blue_button" id="btn_run" onclick="run()">Run</button> 
-                                </div>
                         </div><br>
                         <textarea placeholder="Input Genome" id="input_genome" rows="10"></textarea>
                     </div>
@@ -54,7 +77,7 @@
                             <h2>Results</h2>
                             <div class="output_buttons_div">
                                 <a class="export_json blue_button" id="exportJSON">Export JSON</a>
-                                <button class="blue_button close_button" onclick="close_results()">X</button>
+                                <div onclick="close_results()" class="popupCloseButton">&times;</div>
                             </div>
                         </div>        
                         <br>
@@ -81,7 +104,7 @@
                             </div>
                         </div>
                         <div id="label_no_orfs" class="label_no_orfs">
-                            <label>No ORFs found!</label>
+                            <h1>No ORFs found!</h1>
                         </div>
                     </div>
                 </div>
@@ -106,6 +129,9 @@
         
           <script>
             var ORF_LEN = 0
+            function exit_popup() {
+                document.getElementById("no_genome_label").style.display = "none"
+            }
             function end_loading() {
                 document.getElementById("loader").style.visibility = "hidden"
             }
@@ -200,11 +226,20 @@
                     document.getElementById("input_genome").value = result
                 })                
             }
+            function clear_input() {
+                document.getElementById("input_genome").value = ""
+            }
             function example() {
                 random_example(document.getElementById("length_example").value)
             }
       
             function run() {
+                if (document.getElementById("input_genome").value === "") {
+                    document.getElementById("no_genome_label").style.display = "block"
+                    return
+                } else {
+                    exit_popup()
+                }
                 var url = 'https://orf-container1-2nap6n3mua-uc.a.run.app'
                 var local_url = 'http://127.0.0.1:5000'
                 start_loading()
