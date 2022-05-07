@@ -20,8 +20,7 @@
                 <div class="flex-child"  id="input_flex" >
                     <div class="input_div">
                         <div>
-                            <h2>Search for ORFs</h2>       
-                            <br>
+                            <h2>Search for ORFs</h2><br>
                             <h1>Open Reading Frames (ORF)</h1>
                             <p>In <b>molecular biology</b>, open reading frames (ORFs) are defined as <b>spans of DNA sequence 
                                 between the start and stop codons.</b> <br>Such an ORF may contain a <b>start codon (ATG)</b> 
@@ -73,16 +72,18 @@
                 
                 <div class="flex-child" id="output_flex" style="display: none;" >
                     <div class="output_div">
+                        <div onclick="close_results()" class="popupCloseButton">&times;</div>
                         <div class="output_header_div">
-                            <h2>Results</h2>
+                            <h2>Results</h2><br>
                             <div class="output_buttons_div">
+                                <div class="title_sum">
+                                    <h1 id="output_title_sum">ORFs were found!</h1>
+                                </div>
                                 <a class="export_json blue_button" id="exportJSON">Export JSON</a>
-                                <div onclick="close_results()" class="popupCloseButton">&times;</div>
                             </div>
                         </div>        
                         <br>
                         <div id="div_orfs_found">
-                            <h1 id="output_title_sum">ORFs were found!</h1>
                             <p>The data is presented in the following structure:<br> 
                                 - start and end position in input genom string <br>
                                 - ORF that was found (normal or reverse complement) <br>
